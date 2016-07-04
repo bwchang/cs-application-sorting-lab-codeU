@@ -42,7 +42,7 @@ public class ListSorterTest {
 	/**
 	 * Test method for {@link com.flatironschool.javacs.ListSorter#insertionSort(java.util.List, java.util.Comparator)}.
 	 */
-	@Test
+	//@Test
 	public void testInsertionSort() {
 		List<Integer> list = new ArrayList<Integer>(Arrays.asList(3, 5, 1, 4, 2));
 		sorter.insertionSort(list, comparator);

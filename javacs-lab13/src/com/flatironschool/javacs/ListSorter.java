@@ -64,7 +64,31 @@ public class ListSorter<T> {
 	 */
 	public List<T> mergeSort(List<T> list, Comparator<T> comparator) {
         // FILL THIS IN!
-        return null;
+        if (list.size() == 1) {
+        	return list;
+        }
+        List<T> left = list.subList(0, list.size() / 2);
+        List<T> right = list.subList(list.size() / 2, list.size());
+
+		return merge(mergeSort(left, comparator), mergeSort(right, comparator), comparator);
+	}
+
+	private List<T> merge(List<T> first, List<T> second, Comparator<T> comparator) {
+		List<T> merged = new LinkedList<T>();
+		int i = 0, j = 0;
+		while (i < first.size()) {
+			if (j >= second.size() || comparator.compare(first.get(i), second.get(j)) <= 0) {
+				merged.add(first.get(i));
+				i++;
+			} else {
+				merged.add(second.get(j));
+				j++;
+			}
+		}
+		if (j < second.size()) {
+			merged.addAll(second.subList(j, second.size()));
+		}
+		return merged;
 	}
 
 	/**
@@ -76,6 +100,9 @@ public class ListSorter<T> {
 	 */
 	public void heapSort(List<T> list, Comparator<T> comparator) {
         // FILL THIS IN!
+        List<T> sorted = topK(list.size(), list, comparator);
+        list.clear();
+        list.addAll(sorted);
 	}
 
 	
@@ -90,7 +117,21 @@ public class ListSorter<T> {
 	 */
 	public List<T> topK(int k, List<T> list, Comparator<T> comparator) {
         // FILL THIS IN!
-        return null;
+        List<T> sorted = new LinkedList<T>();
+        PriorityQueue<T> heap = new PriorityQueue<T>();
+        for (T item : list) {
+        	if (heap.size() < k) {
+        		heap.offer(item);
+        	} else if (comparator.compare(item, heap.peek()) > 0) {
+        		heap.poll();
+        		heap.offer(item);
+        	}
+        }
+        list.clear();
+        while (heap.size() > 0) {
+        	sorted.add(heap.poll());
+        }
+        return sorted;
 	}
 
 	
